@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Windows 构建脚本
-使用 PyInstaller 构建 Windows 可执行文件
+Windows build script
+Build Windows executable using PyInstaller
 """
 import os
 import shutil
@@ -11,19 +11,19 @@ import zipfile
 
 
 def clean_build_dirs():
-    """清理之前的构建目录"""
+    """Clean previous build directories"""
     dirs_to_clean = ['build', 'dist']
     for dir_name in dirs_to_clean:
         if os.path.exists(dir_name):
             shutil.rmtree(dir_name)
-            print(f"已删除: {dir_name}")
+            print(f"Deleted: {dir_name}")
 
 
 def build_exe():
-    """使用 PyInstaller 构建可执行文件"""
+    """Build executable using PyInstaller"""
     pyinstaller_cmd = [
         'pyinstaller',
-        '--name=速算闯关',
+        '--name=SpeedMathChallenge',
         '--windowed',
         '--noconsole',
         '--onedir',
@@ -35,25 +35,25 @@ def build_exe():
         'main.py'
     ]
     
-    print("正在使用 PyInstaller 构建应用...")
+    print("Building app with PyInstaller...")
     result = subprocess.run(pyinstaller_cmd)
     if result.returncode != 0:
-        print("构建失败！")
+        print("Build failed!")
         sys.exit(1)
-    print("应用构建成功！")
+    print("App built successfully!")
 
 
 def create_zip():
-    """创建 ZIP 压缩包"""
-    app_dir = 'dist/速算闯关'
-    zip_name = '速算闯关-Windows-Installer.zip'
+    """Create ZIP archive"""
+    app_dir = 'dist/SpeedMathChallenge'
+    zip_name = 'SpeedMathChallenge-Windows-Installer.zip'
     zip_path = f'dist/{zip_name}'
     
     if not os.path.exists(app_dir):
-        print(f"错误: 找不到应用目录 {app_dir}")
+        print(f"Error: App directory not found {app_dir}")
         sys.exit(1)
     
-    print("正在创建 ZIP 压缩包...")
+    print("Creating ZIP archive...")
     
     with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
         for root, dirs, files in os.walk(app_dir):
@@ -62,12 +62,12 @@ def create_zip():
                 arcname = os.path.relpath(file_path, 'dist')
                 zipf.write(file_path, arcname)
     
-    print(f"ZIP 压缩包创建成功: {zip_path}")
+    print(f"ZIP archive created: {zip_path}")
 
 
 def main():
     print("=" * 50)
-    print("速算闯关 - Windows 构建脚本")
+    print("Speed Math Challenge - Windows Build Script")
     print("=" * 50)
     
     clean_build_dirs()
@@ -75,7 +75,7 @@ def main():
     create_zip()
     
     print("\n" + "=" * 50)
-    print("构建完成！")
+    print("Build complete!")
     print("=" * 50)
 
 
