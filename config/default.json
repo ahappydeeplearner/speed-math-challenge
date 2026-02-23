@@ -1,0 +1,92 @@
+{
+  "game_name": "速算闯关 Speed Math Challenge",
+  "version": "1.0.0",
+  
+  "display": {
+    "width": 1000,
+    "height": 800,
+    "fps": 60,
+    "fullscreen": false
+  },
+  
+  "game_rules": {
+    "max_stack": 10,
+    "spawn_interval_base": 3.0,
+    "spawn_interval_min": 0.8,
+    "correct_reward": 1,
+    "wrong_penalty": 0.2,
+    "wrong_spawn_extra": true
+  },
+  
+  "speed_modes": {
+    "slow": {
+      "multiplier": 1.5,
+      "name": "慢速",
+      "description": "适合初学者"
+    },
+    "normal": {
+      "multiplier": 1.0,
+      "name": "中速",
+      "description": "标准难度"
+    },
+    "fast": {
+      "multiplier": 0.6,
+      "name": "快速",
+      "description": "挑战极限"
+    }
+  },
+  
+  "difficulty_levels": {
+    "basic": {
+      "add_range": [0, 99],
+      "add_result_limit": 100,
+      "sub_range": [0, 99],
+      "sub_result_limit": 0,
+      "mul_range": [1, 9],
+      "div_range": [1, 9]
+    },
+    "advanced": {
+      "add_range": [0, 999],
+      "add_result_limit": 1000,
+      "sub_range": [-50, 99],
+      "sub_result_limit": -50,
+      "mul_range": [1, 12],
+      "div_range": [1, 12]
+    }
+  },
+  
+  "scoring": {
+    "base_score": 10,
+    "combo_threshold": 3,
+    "combo_bonus": 2,
+    "max_combo_level": 5
+  },
+  
+  "ui": {
+    "colors": {
+      "background": [147, 112, 219],
+      "primary": [138, 43, 226],
+      "success": [76, 187, 23],
+      "warning": [255, 140, 0],
+      "danger": [255, 99, 71]
+    },
+    "fonts": {
+      "title_size": 72,
+      "question_size": 72,
+      "button_size": 42,
+      "info_size": 36
+    }
+  },
+  
+  "audio": {
+    "enabled": true,
+    "volume": 0.7,
+    "effects": {
+      "correct": "sounds/correct.wav",
+      "wrong": "sounds/wrong.wav",
+      "spawn": "sounds/spawn.wav",
+      "remove": "sounds/remove.wav",
+      "gameover": "sounds/gameover.wav"
+    }
+  }
+}
