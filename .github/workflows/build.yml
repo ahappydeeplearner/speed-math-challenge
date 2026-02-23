@@ -61,8 +61,8 @@ jobs:
     - name: 上传 Windows 安装包
       uses: actions/upload-artifact@v4
       with:
-        name: 速算闯关-Windows
-        path: dist/速算闯关-Windows-Installer.zip
+        name: SpeedMathChallenge-Windows
+        path: dist/SpeedMathChallenge-Windows-Installer.zip
         retention-days: 30
 
   create-release:
@@ -80,13 +80,13 @@ jobs:
       with:
         files: |
           速算闯关-macOS/速算闯关-Installer.dmg
-          速算闯关-Windows/速算闯关-Windows-Installer.zip
+          SpeedMathChallenge-Windows/SpeedMathChallenge-Windows-Installer.zip
         body: |
           ## 速算闯关 - 跨平台版本
           
           ### 下载说明
           - **macOS 用户**: 下载 `速算闯关-Installer.dmg`
-          - **Windows 用户**: 下载 `速算闯关-Windows-Installer.zip`
+          - **Windows 用户**: 下载 `SpeedMathChallenge-Windows-Installer.zip`
           
           ### 安装说明
           
