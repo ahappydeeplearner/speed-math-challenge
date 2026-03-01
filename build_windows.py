@@ -25,13 +25,18 @@ def build_exe():
         'pyinstaller',
         '--name=SpeedMathChallenge',
         '--windowed',
-        '--noconsole',
         '--onedir',
+        '--clean',
+        '--noconfirm',
         '--add-data=assets;assets',
         '--add-data=config;config',
         '--add-data=storage;storage',
+        '--collect-all=pygame',
+        '--collect-all=numpy',
         '--hidden-import=pygame',
         '--hidden-import=numpy',
+        '--hidden-import=numpy.core',
+        '--hidden-import=numpy.core.multiarray',
         'main.py'
     ]
     
