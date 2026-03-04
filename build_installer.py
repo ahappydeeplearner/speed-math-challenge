@@ -22,7 +22,7 @@ def build_app():
     """使用 PyInstaller 构建应用"""
     pyinstaller_cmd = [
         'pyinstaller',
-        '--name=速算闯关',
+        '--name=速算闯关之外星入侵',
         '--windowed',
         '--noconsole',
         '--onedir',
@@ -44,8 +44,8 @@ def build_app():
 
 def create_dmg():
     """创建 DMG 安装包"""
-    app_path = 'dist/速算闯关.app'
-    dmg_name = '速算闯关-Installer.dmg'
+    app_path = 'dist/速算闯关之外星入侵.app'
+    dmg_name = '速算闯关之外星入侵-Installer.dmg'
     dmg_path = f'dist/{dmg_name}'
     
     if not os.path.exists(app_path):
@@ -59,7 +59,7 @@ def create_dmg():
         shutil.rmtree(temp_dir)
     os.makedirs(temp_dir)
     
-    shutil.copytree(app_path, os.path.join(temp_dir, '速算闯关.app'))
+    shutil.copytree(app_path, os.path.join(temp_dir, '速算闯关之外星入侵.app'))
     
     applications_link = os.path.join(temp_dir, 'Applications')
     if not os.path.exists(applications_link):
@@ -70,7 +70,7 @@ def create_dmg():
     
     hdiutil_cmd = [
         'hdiutil', 'create',
-        '-volname', '速算闯关',
+        '-volname', '速算闯关之外星入侵',
         '-srcfolder', temp_dir,
         '-ov',
         '-format', 'UDZO',
@@ -88,7 +88,7 @@ def create_dmg():
 
 def main():
     print("=" * 50)
-    print("速算闯关 - macOS 构建脚本")
+    print("速算闯关之外星入侵 - macOS 构建脚本")
     print("=" * 50)
     
     clean_build_dirs()
