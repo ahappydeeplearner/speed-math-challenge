@@ -23,7 +23,7 @@ def build_exe():
     """Build executable using PyInstaller"""
     pyinstaller_cmd = [
         'pyinstaller',
-        '--name=SpeedMathChallenge',
+        '--name=速算闯关之外星入侵',
         '--windowed',
         '--onedir',
         '--clean',
@@ -50,8 +50,8 @@ def build_exe():
 
 def create_zip():
     """Create ZIP archive"""
-    app_dir = 'dist/SpeedMathChallenge'
-    zip_name = 'SpeedMathChallenge-Windows-Installer.zip'
+    app_dir = 'dist/速算闯关之外星入侵'
+    zip_name = '速算闯关之外星入侵-Windows-Installer.zip'
     zip_path = f'dist/{zip_name}'
     
     if not os.path.exists(app_dir):
