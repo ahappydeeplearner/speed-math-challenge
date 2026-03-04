@@ -20,7 +20,7 @@ class SpeedMathGame:
         self.width = 1000
         self.height = 800
         self.screen = pygame.display.set_mode((self.width, self.height))
-        pygame.display.set_caption('速算闯关 - Speed Math Challenge')
+        pygame.display.set_caption('速算闯关之外星入侵')
         
         # 时钟
         self.clock = pygame.time.Clock()
