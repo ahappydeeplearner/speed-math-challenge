@@ -32,8 +32,8 @@ jobs:
     - name: 上传 macOS 安装包
       uses: actions/upload-artifact@v4
       with:
-        name: 速算闯关-macOS
-        path: dist/速算闯关-Installer.dmg
+        name: 速算闯关之外星入侵-macOS
+        path: dist/速算闯关之外星入侵-Installer.dmg
         retention-days: 30
 
   build-windows:
@@ -61,8 +61,8 @@ jobs:
     - name: 上传 Windows 安装包
       uses: actions/upload-artifact@v4
       with:
-        name: SpeedMathChallenge-Windows
-        path: dist/SpeedMathChallenge-Windows-Installer.zip
+        name: 速算闯关之外星入侵-Windows
+        path: dist/速算闯关之外星入侵-Windows-Installer.zip
         retention-days: 30
 
   create-release:
@@ -79,14 +79,14 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         files: |
-          速算闯关-macOS/速算闯关-Installer.dmg
-          SpeedMathChallenge-Windows/SpeedMathChallenge-Windows-Installer.zip
+          速算闯关之外星入侵-macOS/速算闯关之外星入侵-Installer.dmg
+          速算闯关之外星入侵-Windows/速算闯关之外星入侵-Windows-Installer.zip
         body: |
-          ## 速算闯关 - 跨平台版本
+          ## 速算闯关之外星入侵 - 跨平台版本
           
           ### 下载说明
-          - **macOS 用户**: 下载 `速算闯关-Installer.dmg`
-          - **Windows 用户**: 下载 `SpeedMathChallenge-Windows-Installer.zip`
+          - **macOS 用户**: 下载 `速算闯关之外星入侵-Installer.dmg`
+          - **Windows 用户**: 下载 `速算闯关之外星入侵-Windows-Installer.zip`
           
           ### 安装说明
           
@@ -97,8 +97,7 @@ jobs:
           
           **Windows**:
           1. 解压 ZIP 文件
-          2. 右键 install.bat → 以管理员身份运行
-          3. 或直接运行 速算闯关.exe（便携模式）
+          2. 或直接运行 速算闯关之外星入侵.exe（便携模式）
           
           ### 系统要求
           - macOS 10.13 或更高版本
