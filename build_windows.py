@@ -55,7 +55,7 @@ def create_zip():
     zip_path = f'dist/{zip_name}'
     
     if not os.path.exists(app_dir):
-        print(f"Error: App directory not found {app_dir}")
+        print("Error: App directory not found")
         sys.exit(1)
     
     print("Creating ZIP archive...")
@@ -67,7 +67,7 @@ def create_zip():
                 arcname = os.path.relpath(file_path, 'dist')
                 zipf.write(file_path, arcname)
     
-    print(f"ZIP archive created: {zip_path}")
+    print("ZIP archive created successfully")
 
 
 def main():
