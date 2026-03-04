@@ -1,88 +1,106 @@
-#!/usr/bin/env python3
-"""
-Windows build script
-Build Windows executable using PyInstaller
-"""
-import os
-import shutil
-import subprocess
-import sys
-import zipfile
+name: Cross-platform Build
 
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
 
-def clean_build_dirs():
-    """Clean previous build directories"""
-    dirs_to_clean = ['build', 'dist']
-    for dir_name in dirs_to_clean:
-        if os.path.exists(dir_name):
-            shutil.rmtree(dir_name)
-            print(f"Deleted: {dir_name}")
-
-
-def build_exe():
-    """Build executable using PyInstaller"""
-    pyinstaller_cmd = [
-        'pyinstaller',
-        '--name=速算闯关之外星入侵',
-        '--windowed',
-        '--onedir',
-        '--clean',
-        '--noconfirm',
-        '--add-data=assets;assets',
-        '--add-data=config;config',
-        '--add-data=storage;storage',
-        '--collect-all=pygame',
-        '--collect-all=numpy',
-        '--hidden-import=pygame',
-        '--hidden-import=numpy',
-        '--hidden-import=numpy.core',
-        '--hidden-import=numpy.core.multiarray',
-        'main.py'
-    ]
+jobs:
+  build-macos:
+    name: Build macOS Version
+    runs-on: macos-latest
     
-    print("Building app with PyInstaller...")
-    result = subprocess.run(pyinstaller_cmd)
-    if result.returncode != 0:
-        print("Build failed!")
-        sys.exit(1)
-    print("App built successfully!")
-
-
-def create_zip():
-    """Create ZIP archive"""
-    app_dir = 'dist/速算闯关之外星入侵'
-    zip_name = '速算闯关之外星入侵-Windows-Installer.zip'
-    zip_path = f'dist/{zip_name}'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
     
-    if not os.path.exists(app_dir):
-        print("Error: App directory not found")
-        sys.exit(1)
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
     
-    print("Creating ZIP archive...")
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pygame pyinstaller pillow
     
-    with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-        for root, dirs, files in os.walk(app_dir):
-            for file in files:
-                file_path = os.path.join(root, file)
-                arcname = os.path.relpath(file_path, 'dist')
-                zipf.write(file_path, arcname)
+    - name: Build macOS app
+      run: |
+        python3 build_installer.py
     
-    print("ZIP archive created successfully")
+    - name: Upload macOS installer
+      uses: actions/upload-artifact@v4
+      with:
+        name: SpeedMathChallenge-macOS
+        path: dist/SpeedMathChallenge-Installer.dmg
+        retention-days: 30
 
-
-def main():
-    print("=" * 50)
-    print("Speed Math Challenge - Windows Build Script")
-    print("=" * 50)
+  build-windows:
+    name: Build Windows Version
+    runs-on: windows-latest
     
-    clean_build_dirs()
-    build_exe()
-    create_zip()
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
     
-    print("\n" + "=" * 50)
-    print("Build complete!")
-    print("=" * 50)
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pygame pyinstaller pillow
+    
+    - name: Build Windows app
+      run: |
+        python build_windows.py
+    
+    - name: Upload Windows installer
+      uses: actions/upload-artifact@v4
+      with:
+        name: SpeedMathChallenge-Windows
+        path: dist/SpeedMathChallenge-Windows-Installer.zip
+        retention-days: 30
 
-
-if __name__ == '__main__':
-    main()
+  create-release:
+    name: Create Release
+    needs: [build-macos, build-windows]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          SpeedMathChallenge-macOS/SpeedMathChallenge-Installer.dmg
+          SpeedMathChallenge-Windows/SpeedMathChallenge-Windows-Installer.zip
+        body: |
+          ## Speed Math Challenge - Cross-platform Version
+          
+          ### Download Instructions
+          - **macOS Users**: Download `SpeedMathChallenge-Installer.dmg`
+          - **Windows Users**: Download `SpeedMathChallenge-Windows-Installer.zip`
+          
+          ### Installation Instructions
+          
+          **macOS**:
+          1. Open DMG file
+          2. Drag app to Applications folder
+          3. First run requires authorization in System Settings
+          
+          **Windows**:
+          1. Extract ZIP file
+          2. Run SpeedMathChallenge.exe directly (portable mode)
+          
+          ### System Requirements
+          - macOS 10.13 or higher
+          - Windows 7/8/10/11
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
