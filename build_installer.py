@@ -10,19 +10,19 @@ import sys
 
 
 def clean_build_dirs():
-    """清理之前的构建目录"""
+    """Clean previous build directories"""
     dirs_to_clean = ['build', 'dist']
     for dir_name in dirs_to_clean:
         if os.path.exists(dir_name):
             shutil.rmtree(dir_name)
-            print(f"已删除: {dir_name}")
+            print(f"Deleted: {dir_name}")
 
 
 def build_app():
-    """使用 PyInstaller 构建应用"""
+    """Build app using PyInstaller"""
     pyinstaller_cmd = [
         'pyinstaller',
-        '--name=速算闯关之外星入侵',
+        '--name=SpeedMathChallenge',
         '--windowed',
         '--noconsole',
         '--onedir',
@@ -34,25 +34,25 @@ def build_app():
         'main.py'
     ]
     
-    print("正在使用 PyInstaller 构建应用...")
+    print("Building app with PyInstaller...")
     result = subprocess.run(pyinstaller_cmd)
     if result.returncode != 0:
-        print("构建失败！")
+        print("Build failed!")
         sys.exit(1)
-    print("应用构建成功！")
+    print("App built successfully!")
 
 
 def create_dmg():
-    """创建 DMG 安装包"""
-    app_path = 'dist/速算闯关之外星入侵.app'
-    dmg_name = '速算闯关之外星入侵-Installer.dmg'
+    """Create DMG installer"""
+    app_path = 'dist/SpeedMathChallenge.app'
+    dmg_name = 'SpeedMathChallenge-Installer.dmg'
     dmg_path = f'dist/{dmg_name}'
     
     if not os.path.exists(app_path):
-        print(f"错误: 找不到应用 {app_path}")
+        print("Error: App not found")
         sys.exit(1)
     
-    print("正在创建 DMG 安装包...")
+    print("Creating DMG installer...")
     
     temp_dir = 'temp_dmg'
     if os.path.exists(temp_dir):
@@ -70,7 +70,7 @@ def create_dmg():
     
     hdiutil_cmd = [
         'hdiutil', 'create',
-        '-volname', '速算闯关之外星入侵',
+        '-volname', 'SpeedMathChallenge',
         '-srcfolder', temp_dir,
         '-ov',
         '-format', 'UDZO',
@@ -79,16 +79,16 @@ def create_dmg():
     
     result = subprocess.run(hdiutil_cmd)
     if result.returncode != 0:
-        print("DMG 创建失败！")
+        print("DMG creation failed!")
         sys.exit(1)
     
     shutil.rmtree(temp_dir)
-    print(f"DMG 安装包创建成功: {dmg_path}")
+    print("DMG installer created successfully")
 
 
 def main():
     print("=" * 50)
-    print("速算闯关之外星入侵 - macOS 构建脚本")
+    print("Speed Math Challenge - macOS Build Script")
     print("=" * 50)
     
     clean_build_dirs()
@@ -96,7 +96,7 @@ def main():
     create_dmg()
     
     print("\n" + "=" * 50)
-    print("构建完成！")
+    print("Build complete!")
     print("=" * 50)
 
 
